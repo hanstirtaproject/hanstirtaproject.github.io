@@ -42,13 +42,13 @@
       color: #ffd700;
     }
     .container {
-      max-width: 900px;
+      /* Lebar maksimum yang sama untuk semua konten, ditingkatkan */
+      max-width: 1100px;
       margin: 30px auto;
       padding: 25px;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      /* Memastikan kontainer mengisi ruang kosong, mendorong footer ke bawah */
       flex-grow: 1;
     }
     .content-section {
@@ -89,6 +89,10 @@
     .full-post.active {
       display: block;
     }
+    .full-post-content {
+      /* Menambahkan padding agar konten postingan lengkap terlihat konsisten */
+      padding: 0 20px;
+    }
     .pagination {
       text-align: center;
       margin: 30px 0;
@@ -110,15 +114,6 @@
     .pagination a.disabled {
       background: #ccc;
       cursor: not-allowed;
-    }
-    .pagination .page-number {
-      background: #eee;
-      color: #4e54c8;
-      font-weight: bold;
-    }
-    .pagination .page-number.active {
-      background: #ff6f61;
-      color: #fff;
     }
     footer {
       background: #222;
@@ -160,7 +155,6 @@
       </div>
       <div class="pagination">
         <a href="#" id="prev-btn">&laquo; Prev</a>
-        <span id="page-numbers"></span>
         <a href="#" id="next-btn">Next &raquo;</a>
       </div>
     </section>
@@ -175,7 +169,7 @@
     <!-- Halaman Postingan Tunggal -->
     <section id="single-post" class="content-section">
       <button onclick="showPage('dokumentasi')" style="background: #4e54c8; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">&laquo; Kembali ke Dokumentasi</button>
-      <div id="full-post-content">
+      <div id="full-post-content" class="full-post-content">
         <!-- Konten postingan lengkap akan dimuat di sini oleh JavaScript -->
       </div>
     </section>
@@ -239,27 +233,10 @@
     function updatePagination(page) {
       const prevBtn = document.getElementById('prev-btn');
       const nextBtn = document.getElementById('next-btn');
-      const pageNumbers = document.getElementById('page-numbers');
       const totalPages = Math.ceil(currentPosts.length / postsPerPage); // Menggunakan currentPosts.length
 
       prevBtn.classList.toggle('disabled', page === 1);
       nextBtn.classList.toggle('disabled', page === totalPages);
-
-      pageNumbers.innerHTML = '';
-      for (let i = 1; i <= totalPages; i++) {
-        const pageLink = document.createElement('a');
-        pageLink.textContent = i;
-        pageLink.classList.add('page-number');
-        if (i === page) {
-          pageLink.classList.add('active');
-        }
-        pageLink.addEventListener('click', (event) => {
-          event.preventDefault();
-          currentPage = i;
-          displayPosts(currentPage);
-        });
-        pageNumbers.appendChild(pageLink);
-      }
     }
 
     // Fungsi untuk menampilkan postingan lengkap
