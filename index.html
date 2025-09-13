@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hans Tirta Project 2025</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f0f4ff, #fdf2f8);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #4e54c8, #8f94fb);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+    nav {
+      background: #ff6f61;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #ffd700;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .content-section {
+      display: none;
+    }
+    .content-section.active {
+      display: block;
+    }
+    .search-box {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .search-box input[type="text"] {
+      width: 85%;
+      padding: 12px;
+      border: 2px solid #8f94fb;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .post {
+      margin-bottom: 25px;
+      padding: 20px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #e0f7fa, #fffde7);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .post h2 {
+      margin-top: 0;
+      color: #4e54c8;
+    }
+    .post p {
+      margin: 8px 0 0;
+    }
+    .full-post {
+      display: none;
+    }
+    .full-post.active {
+      display: block;
+    }
+    .pagination {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .pagination a {
+      display: inline-block;
+      margin: 0 6px;
+      padding: 10px 15px;
+      text-decoration: none;
+      background: #4e54c8;
+      color: #fff;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .pagination a:hover {
+      background: #ff6f61;
+    }
+    .pagination a.disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .pagination .page-number {
+      background: #eee;
+      color: #4e54c8;
+      font-weight: bold;
+    }
+    .pagination .page-number.active {
+      background: #ff6f61;
+      color: #fff;
+    }
+    footer {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 -3px 6px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hans Tirta Project 2025</h1>
+  </header>
+
+  <nav>
+    <a href="#" data-page="home">Home</a>
+    <a href="#" data-page="dokumentasi">Dokumentasi</a>
+    <a href="#" data-page="tentang">Tentang</a>
+  </nav>
+
+  <div class="container">
+    <!-- Halaman Home -->
+    <section id="home" class="content-section active">
+      <h2>Selamat Datang di Hans Tirta Project 2025</h2>
+      <p>Ini adalah halaman beranda. Kami menyediakan berbagai dokumentasi dan informasi mengenai proyek kami. Selamat menjelajahi!</p>
+      <p>Gunakan navigasi di atas untuk berpindah antar halaman.</p>
+    </section>
+
+    <!-- Halaman Dokumentasi -->
+    <section id="dokumentasi" class="content-section">
+      <h2>Dokumentasi Proyek</h2>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Cari dokumentasi...">
+      </div>
+      <div id="post-list">
+        <!-- Postingan akan dimuat di sini oleh JavaScript -->
+      </div>
+      <div class="pagination">
+        <a href="#" id="prev-btn">&laquo; Prev</a>
+        <span id="page-numbers"></span>
+        <a href="#" id="next-btn">Next &raquo;</a>
+      </div>
+    </section>
+
+    <!-- Halaman Tentang -->
+    <section id="tentang" class="content-section">
+      <h2>Tentang Kami</h2>
+      <p>Hans Tirta Project 2025 adalah sebuah inisiatif untuk menyediakan informasi dan dokumentasi yang mudah diakses bagi semua orang.</p>
+      <p>Kami berkomitmen untuk terus memperbarui dan mengembangkan konten kami untuk memastikan relevansi dan keakuratannya.</p>
+    </section>
+
+    <!-- Halaman Postingan Tunggal -->
+    <section id="single-post" class="content-section">
+      <button onclick="showPage('dokumentasi')" style="background: #4e54c8; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">&laquo; Kembali ke Dokumentasi</button>
+      <div id="full-post-content">
+        <!-- Konten postingan lengkap akan dimuat di sini oleh JavaScript -->
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; Hans Tirta Project 2025
+  </footer>
+
+  <script>
+    // Data postingan
+    const posts = [];
+    for (let i = 1; i <= 30; i++) {
+        posts.push({
+            id: i,
+            title: `Judul Dokumentasi ${i}`,
+            summary: `Ini adalah ringkasan dari dokumentasi ke-${i}.`,
+            content: `Ini adalah isi lengkap dari postingan dokumentasi ke-${i}. Halaman ini memberikan detail lebih lanjut mengenai topik yang dibahas.`
+        });
+    }
+
+    const postsPerPage = 7;
+    let currentPage = 1;
+    let currentPosts = posts; // Menambahkan variabel untuk menyimpan postingan yang sedang ditampilkan (hasil filter)
+
+    // Fungsi untuk menampilkan halaman
+    function showPage(pageId) {
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    // Fungsi untuk menampilkan postingan di halaman Dokumentasi
+    function displayPosts(page) {
+      const postList = document.getElementById('post-list');
+      postList.innerHTML = '';
+      const startIndex = (page - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const paginatedPosts = currentPosts.slice(startIndex, endIndex);
+
+      paginatedPosts.forEach(post => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+        postDiv.dataset.postId = post.id;
+        postDiv.innerHTML = `
+          <h2>${post.title}</h2>
+          <p>${post.summary}</p>
+        `;
+        postDiv.addEventListener('click', () => {
+            showFullPost(post.id);
+        });
+        postList.appendChild(postDiv);
+      });
+
+      updatePagination(page);
+    }
+
+    // Fungsi untuk memperbarui tombol pagination
+    function updatePagination(page) {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const pageNumbers = document.getElementById('page-numbers');
+      const totalPages = Math.ceil(currentPosts.length / postsPerPage); // Menggunakan currentPosts.length
+
+      prevBtn.classList.toggle('disabled', page === 1);
+      nextBtn.classList.toggle('disabled', page === totalPages);
+
+      pageNumbers.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.textContent = i;
+        pageLink.classList.add('page-number');
+        if (i === page) {
+          pageLink.classList.add('active');
+        }
+        pageLink.addEventListener('click', (event) => {
+          event.preventDefault();
+          currentPage = i;
+          displayPosts(currentPage);
+        });
+        pageNumbers.appendChild(pageLink);
+      }
+    }
+
+    // Fungsi untuk menampilkan postingan lengkap
+    function showFullPost(postId) {
+        const post = posts.find(p => p.id == postId);
+        const fullPostContent = document.getElementById('full-post-content');
+        if (post) {
+            fullPostContent.innerHTML = `
+                <h2>${post.title}</h2>
+                <p>${post.content}</p>
+            `;
+            showPage('single-post');
+        }
+    }
+
+    // Fungsi untuk memfilter postingan berdasarkan teks pencarian
+    function filterPosts() {
+        const searchText = document.getElementById('search-input').value.toLowerCase();
+        currentPosts = posts.filter(post => {
+            return post.title.toLowerCase().includes(searchText) || post.summary.toLowerCase().includes(searchText);
+        });
+        currentPage = 1; // Kembali ke halaman pertama setelah memfilter
+        displayPosts(currentPage);
+    }
+
+    // Event listener untuk navigasi
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.querySelectorAll('nav a');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const searchInput = document.getElementById('search-input'); // Mendapatkan input pencarian
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const page = event.target.dataset.page;
+          showPage(page);
+          if (page === 'dokumentasi') {
+            currentPage = 1;
+            filterPosts(); // Panggil filterPosts saat beralih ke halaman dokumentasi
+          }
+        });
+      });
+
+      prevBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (currentPage > 1) {
+          currentPage--;
+          displayPosts(currentPage);
+        }
+      });
+
+      nextBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        const totalPages = Math.ceil(currentPosts.length / postsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayPosts(currentPage);
+        }
+      });
+      
+      searchInput.addEventListener('input', filterPosts); // Menambahkan event listener untuk input pencarian
+
+      // Tampilkan halaman dokumentasi saat pertama kali dimuat
+      displayPosts(currentPage);
+    });
+  </script>
+</body>
+</html>
