@@ -1,308 +1,412 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hans Tirta Project 2025</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f0f4ff, #fdf2f8);
-      color: #333;
-      /* CSS untuk Sticky Footer */
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background: linear-gradient(90deg, #4e54c8, #8f94fb);
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-    nav {
-      background: #ff6f61;
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      padding: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-    nav a:hover {
-      color: #ffd700;
-    }
-    .container {
-      /* Lebar maksimum yang sama untuk semua konten, ditingkatkan */
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 25px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      flex-grow: 1;
-    }
-    .content-section {
-      display: none;
-    }
-    .content-section.active {
-      display: block;
-    }
-    .search-box {
-      margin-bottom: 25px;
-      text-align: center;
-    }
-    .search-box input[type="text"] {
-      width: 85%;
-      padding: 12px;
-      border: 2px solid #8f94fb;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-    .post {
-      margin-bottom: 25px;
-      padding: 20px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #e0f7fa, #fffde7);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      cursor: pointer;
-    }
-    .post h2 {
-      margin-top: 0;
-      color: #4e54c8;
-    }
-    .post p {
-      margin: 8px 0 0;
-    }
-    .full-post {
-      display: none;
-    }
-    .full-post.active {
-      display: block;
-    }
-    .full-post-content {
-      /* Menambahkan padding agar konten postingan lengkap terlihat konsisten */
-      padding: 0 20px;
-    }
-    .pagination {
-      text-align: center;
-      margin: 30px 0;
-    }
-    .pagination a {
-      display: inline-block;
-      margin: 0 6px;
-      padding: 10px 15px;
-      text-decoration: none;
-      background: #4e54c8;
-      color: #fff;
-      border-radius: 6px;
-      transition: background 0.3s ease;
-      cursor: pointer;
-    }
-    .pagination a:hover {
-      background: #ff6f61;
-    }
-    .pagination a.disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    footer {
-      background: #222;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-      box-shadow: 0 -3px 6px rgba(0,0,0,0.2);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Sederhana</title>
+    <style>
+        /* Gaya umum */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #388E3C;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --white: #fff;
+            --footer-bg: #222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Header dan Navigasi */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        header .logo a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Konten Utama */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Halaman Home, About dan Single Post */
+        .home-section, .about-section, .single-post-section {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .home-section h1, .about-section h1, .single-post-section h1 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .home-section p, .about-section p {
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Halaman Dokumentasi */
+        .docs-section {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .docs-section h1 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .post {
+            background-color: #fafafa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .post h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .post p {
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: auto; /* Memastikan footer menempel di bawah */
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Pencarian */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-container input[type="text"] {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            width: 250px;
+        }
+        
+        .single-post-section {
+            text-align: left;
+        }
+
+        .single-post-section h1 {
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+            }
+            .search-container {
+                margin-top: 1rem;
+                margin-left: 0;
+            }
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Hans Tirta Project 2025</h1>
-  </header>
 
-  <nav>
-    <a href="#" data-page="home">Home</a>
-    <a href="#" data-page="dokumentasi">Dokumentasi</a>
-    <a href="#" data-page="tentang">Tentang</a>
-  </nav>
+    <header>
+        <div class="logo">
+            <a href="#" onclick="showPage(event, 'home')">WebsiteKu</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage(event, 'home')">Home</a></li>
+                <li><a href="#" onclick="showPage(event, 'about')">About</a></li>
+                <li><a href="#" onclick="showPage(event, 'dokumentasi')">Dokumentasi</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="container">
-    <!-- Halaman Home -->
-    <section id="home" class="content-section active">
-      <h2>Selamat Datang di Hans Tirta Project 2025</h2>
-      <p>Ini adalah halaman beranda. Kami menyediakan berbagai dokumentasi dan informasi mengenai proyek kami. Selamat menjelajahi!</p>
-      <p>Gunakan navigasi di atas untuk berpindah antar halaman.</p>
-    </section>
+    <main>
+        <!-- Halaman Home (Halaman Pembuka Baru) -->
+        <section id="home" class="page-content active home-section">
+            <h1>Selamat Datang!</h1>
+            <p>
+                Selamat datang di website sederhana ini. Gunakan menu navigasi di atas untuk menjelajahi berbagai halaman. Halaman "Dokumentasi" berisi daftar postingan yang dapat Anda cari dan lihat.
+            </p>
+        </section>
 
-    <!-- Halaman Dokumentasi -->
-    <section id="dokumentasi" class="content-section">
-      <h2>Dokumentasi Proyek</h2>
-      <div class="search-box">
-        <input type="text" id="search-input" placeholder="Cari dokumentasi...">
-      </div>
-      <div id="post-list">
-        <!-- Postingan akan dimuat di sini oleh JavaScript -->
-      </div>
-      <div class="pagination">
-        <a href="#" id="prev-btn">&laquo; Prev</a>
-        <a href="#" id="next-btn">Next &raquo;</a>
-      </div>
-    </section>
+        <!-- Halaman About -->
+        <section id="about" class="page-content about-section">
+            <h1>Tentang Kami</h1>
+            <p>
+                Selamat datang di website kami! Kami adalah sebuah tim yang berdedikasi untuk memberikan konten berkualitas tinggi dan informasi yang relevan kepada audiens kami. Misi kami adalah untuk menyebarkan pengetahuan dan inspirasi melalui tulisan-tulisan yang menarik dan mudah dipahami. Kami percaya bahwa setiap orang berhak mendapatkan akses ke informasi yang akurat dan bermanfaat.
+            </p>
+        </section>
 
-    <!-- Halaman Tentang -->
-    <section id="tentang" class="content-section">
-      <h2>Tentang Kami</h2>
-      <p>Hans Tirta Project 2025 adalah sebuah inisiatif untuk menyediakan informasi dan dokumentasi yang mudah diakses bagi semua orang.</p>
-      <p>Kami berkomitmen untuk terus memperbarui dan mengembangkan konten kami untuk memastikan relevansi dan keakuratannya.</p>
-    </section>
+        <!-- Halaman Dokumentasi (Halaman Postingan Baru) -->
+        <section id="dokumentasi" class="page-content docs-section">
+            <h1 id="docs-title">Dokumentasi</h1>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Cari..." id="search-input" onkeyup="searchPosts()">
+            </div>
 
-    <!-- Halaman Postingan Tunggal -->
-    <section id="single-post" class="content-section">
-      <button onclick="showPage('dokumentasi')" style="background: #4e54c8; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">&laquo; Kembali ke Dokumentasi</button>
-      <div id="full-post-content" class="full-post-content">
-        <!-- Konten postingan lengkap akan dimuat di sini oleh JavaScript -->
-      </div>
-    </section>
-  </div>
+            <div id="posts-container">
+                <!-- Konten post akan dimasukkan di sini oleh JavaScript -->
+            </div>
+            <div class="pagination">
+                <button id="prev-btn" onclick="changePage(-1)" disabled>Prev</button>
+                <button id="next-btn" onclick="changePage(1)">Next</button>
+            </div>
+        </section>
 
-  <footer>
-    &copy; Hans Tirta Project 2025
-  </footer>
+        <!-- Halaman Postingan Tunggal -->
+        <section id="single-post-page" class="page-content single-post-section">
+            <h1 id="post-title"></h1>
+            <p id="post-content"></p>
+            <button class="back-button" onclick="showPage(event, 'dokumentasi')">Kembali</button>
+        </section>
+    </main>
 
-  <script>
-    // Data postingan
-    const posts = [];
-    for (let i = 1; i <= 30; i++) {
-        posts.push({
-            id: i,
-            title: `Judul Dokumentasi ${i}`,
-            summary: `Ini adalah ringkasan dari dokumentasi ke-${i}.`,
-            content: `Ini adalah isi lengkap dari postingan dokumentasi ke-${i}. Halaman ini memberikan detail lebih lanjut mengenai topik yang dibahas.`
-        });
-    }
+    <footer>
+        <p>&copy; 2024 Website Sederhana. Hak Cipta Dilindungi.</p>
+    </footer>
 
-    const postsPerPage = 7;
-    let currentPage = 1;
-    let currentPosts = posts; // Menambahkan variabel untuk menyimpan postingan yang sedang ditampilkan (hasil filter)
+    <script>
+        const pages = document.querySelectorAll('.page-content');
+        const postsPerPage = 7;
+        let currentPage = 1;
+        let filteredPosts = [];
+        
+        // Contoh data postingan (aslinya bisa dari API atau database)
+        const allPosts = [
+            { title: "Judul Postingan 1", content: "Ini adalah isi dari postingan pertama. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 2", content: "Ini adalah isi dari postingan kedua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 3", content: "Ini adalah isi dari postingan ketiga. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 4", content: "Ini adalah isi dari postingan keempat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 5", content: "Ini adalah isi dari postingan kelima. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 6", content: "Ini adalah isi dari postingan keenam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 7", content: "Ini adalah isi dari postingan ketujuh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 8", content: "Ini adalah isi dari postingan kedelapan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 9", content: "Ini adalah isi dari postingan kesembilan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 10", content: "Ini adalah isi dari postingan kesepuluh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 11", content: "Ini adalah isi dari postingan kesebelas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 12", content: "Ini adalah isi dari postingan keduabelas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 13", content: "Ini adalah isi dari postingan ketigabelas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 14", content: "Ini adalah isi dari postingan keempatbelas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+            { title: "Judul Postingan 15", content: "Ini adalah isi dari postingan kelimabelas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+        ];
 
-    // Fungsi untuk menampilkan halaman
-    function showPage(pageId) {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById(pageId).classList.add('active');
-    }
+        // Fungsi untuk menampilkan halaman
+        function showPage(event, pageId) {
+            event.preventDefault();
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
 
-    // Fungsi untuk menampilkan postingan di halaman Dokumentasi
-    function displayPosts(page) {
-      const postList = document.getElementById('post-list');
-      postList.innerHTML = '';
-      const startIndex = (page - 1) * postsPerPage;
-      const endIndex = startIndex + postsPerPage;
-      const paginatedPosts = currentPosts.slice(startIndex, endIndex);
-
-      paginatedPosts.forEach(post => {
-        const postDiv = document.createElement('div');
-        postDiv.className = 'post';
-        postDiv.dataset.postId = post.id;
-        postDiv.innerHTML = `
-          <h2>${post.title}</h2>
-          <p>${post.summary}</p>
-        `;
-        postDiv.addEventListener('click', () => {
-            showFullPost(post.id);
-        });
-        postList.appendChild(postDiv);
-      });
-
-      updatePagination(page);
-    }
-
-    // Fungsi untuk memperbarui tombol pagination
-    function updatePagination(page) {
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const totalPages = Math.ceil(currentPosts.length / postsPerPage); // Menggunakan currentPosts.length
-
-      prevBtn.classList.toggle('disabled', page === 1);
-      nextBtn.classList.toggle('disabled', page === totalPages);
-    }
-
-    // Fungsi untuk menampilkan postingan lengkap
-    function showFullPost(postId) {
-        const post = posts.find(p => p.id == postId);
-        const fullPostContent = document.getElementById('full-post-content');
-        if (post) {
-            fullPostContent.innerHTML = `
-                <h2>${post.title}</h2>
-                <p>${post.content}</p>
-            `;
-            showPage('single-post');
+            if (pageId === 'dokumentasi') {
+                filteredPosts = allPosts;
+                currentPage = 1;
+                displayPosts(allPosts, currentPage);
+            }
         }
-    }
 
-    // Fungsi untuk memfilter postingan berdasarkan teks pencarian
-    function filterPosts() {
-        const searchText = document.getElementById('search-input').value.toLowerCase();
-        currentPosts = posts.filter(post => {
-            return post.title.toLowerCase().includes(searchText) || post.summary.toLowerCase().includes(searchText);
-        });
-        currentPage = 1; // Kembali ke halaman pertama setelah memfilter
-        displayPosts(currentPage);
-    }
+        // Fungsi untuk menampilkan postingan
+        function displayPosts(posts, page) {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            
+            const start = (page - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const paginatedPosts = posts.slice(start, end);
 
-    // Event listener untuk navigasi
-    document.addEventListener('DOMContentLoaded', () => {
-      const navLinks = document.querySelectorAll('nav a');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const searchInput = document.getElementById('search-input'); // Mendapatkan input pencarian
+            const docsTitle = document.getElementById('docs-title');
+            if (filteredPosts.length < allPosts.length) {
+                docsTitle.textContent = `Dokumentasi (${filteredPosts.length} Hasil)`;
+            } else {
+                docsTitle.textContent = `Dokumentasi`;
+            }
 
-      navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          const page = event.target.dataset.page;
-          showPage(page);
-          if (page === 'dokumentasi') {
+            paginatedPosts.forEach((post, index) => {
+                const globalIndex = start + index;
+                const postDiv = document.createElement('div');
+                postDiv.classList.add('post');
+                postDiv.onclick = () => showPost(globalIndex);
+                postDiv.innerHTML = `<h2>${post.title}</h2><p>${post.content.substring(0, 100)}...</p>`;
+                postsContainer.appendChild(postDiv);
+            });
+            
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            prevBtn.disabled = page === 1;
+            nextBtn.disabled = end >= posts.length;
+        }
+
+        // Fungsi untuk menampilkan postingan tunggal
+        function showPost(index) {
+            const post = allPosts[index];
+            if (post) {
+                document.getElementById('post-title').textContent = post.title;
+                document.getElementById('post-content').textContent = post.content;
+                showPage(event, 'single-post-page');
+            }
+        }
+
+        // Fungsi untuk mengubah halaman pagination
+        function changePage(direction) {
+            currentPage += direction;
+            displayPosts(filteredPosts, currentPage);
+        }
+
+        // Fungsi untuk pencarian
+        function searchPosts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm === '') {
+                filteredPosts = allPosts;
+            } else {
+                filteredPosts = allPosts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) || 
+                    post.content.toLowerCase().includes(searchTerm)
+                );
+            }
             currentPage = 1;
-            filterPosts(); // Panggil filterPosts saat beralih ke halaman dokumentasi
-          }
+            displayPosts(filteredPosts, currentPage);
+        }
+
+        // Tampilkan halaman home pertama kali saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage(event, 'home');
         });
-      });
 
-      prevBtn.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (currentPage > 1) {
-          currentPage--;
-          displayPosts(currentPage);
-        }
-      });
+    </script>
 
-      nextBtn.addEventListener('click', (event) => {
-        event.preventDefault();
-        const totalPages = Math.ceil(currentPosts.length / postsPerPage);
-        if (currentPage < totalPages) {
-          currentPage++;
-          displayPosts(currentPage);
-        }
-      });
-      
-      searchInput.addEventListener('input', filterPosts); // Menambahkan event listener untuk input pencarian
-
-      // Tampilkan halaman dokumentasi saat pertama kali dimuat
-      displayPosts(currentPage);
-    });
-  </script>
 </body>
 </html>
