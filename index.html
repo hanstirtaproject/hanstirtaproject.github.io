@@ -11,6 +11,10 @@
       padding: 0;
       background: linear-gradient(135deg, #f0f4ff, #fdf2f8);
       color: #333;
+      /* CSS untuk Sticky Footer */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header {
       background: linear-gradient(90deg, #4e54c8, #8f94fb);
@@ -44,6 +48,8 @@
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      /* Memastikan kontainer mengisi ruang kosong, mendorong footer ke bawah */
+      flex-grow: 1;
     }
     .content-section {
       display: none;
